@@ -20,7 +20,7 @@ def is_prime(n: int) -> bool:
         return True
 
 
-def gcd(a, b) -> int:
+def gcd(a: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
     >>> gcd(12, 15)
@@ -36,18 +36,40 @@ def gcd(a, b) -> int:
     return a + b
 
 
-def multiplicative_inverse(e, phi):
+def multiplicative_inverse(e: int, phi: int) -> int:
     """
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+
+    A = phi
+    B = e
+    k = 0
+    table = [[A, B, A % B, A // B]]
+    while A % B != 0:
+        k += 1
+        C = A % B
+        A = B
+        B = C
+        table.append([A, B, A % B, A // B])
+
+    x = 0
+    y = 1
+    for i in range(k + 1):
+        table[k - i].append(x)
+        table[k - i].append(y)
+        x0 = x
+        y0 = y
+        x = y0
+        y = x0 - y0 * (int(table[k - i - 1][3]))
+
+    d = table[0][5] % phi
+    return d
 
 
-def generate_keypair(p, q) -> tuple:
+def generate_keypair(p, q):
     if not (is_prime(p) and is_prime(q)):
         raise ValueError('Both numbers must be prime.')
     elif p == q:
