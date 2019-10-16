@@ -75,7 +75,6 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     for i in range(3):
         for j in range(3):
             block.append(grid[block_row + i][block_col + j])
-
     return block
 
 
@@ -140,7 +139,6 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
         grid[row][col] = i
         solution = solve(grid)
         if solution:
-
             return grid
     grid[row][col] = '.'
 
