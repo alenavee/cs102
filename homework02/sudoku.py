@@ -39,7 +39,8 @@ def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    row, col = pos
+    return grid[row]
 
 
 def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -51,7 +52,8 @@ def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+    row, col = pos
+    return [grid[i][col] for i in range(len(grid))]
 
 
 def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -64,7 +66,15 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    row, col = pos
+    block = []
+    block_row = row // 3 * 3
+    block_col = col // 3 * 3
+    for i in range(3):
+        for j in range(3):
+            block.append(grid[block_row + i][block_col + j])
+
+    return block
 
 
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
@@ -76,7 +86,12 @@ def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    pass
+    for row in range(len(grid)):
+        for col in range(len(grid)):
+            if grid[row][col] == '.':
+                empty_position = (row, col)
+                return empty_position
+    return None
 
 
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
@@ -89,7 +104,14 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     >>> values == {'2', '5', '9'}
     True
     """
-    pass
+    possible_values = set()
+    row_values = get_row(grid, pos)
+    col_values = get_col(grid, pos)
+    block_values = get_block(grid, pos)
+    for i in range(1, 10):
+        if str(i) not in row_values and str(i) not in col_values and str(i) not in block_values:
+            possible_values.add(str(i))
+    return possible_values
 
 
 def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
