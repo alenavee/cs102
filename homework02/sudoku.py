@@ -126,13 +126,34 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    pass
+    empty_position = find_empty_positions(grid)
+    if empty_position is None:
+        return grid
+    possible_values = find_possible_values(grid, empty_position)
+    row, col = empty_position
+    for i in possible_values:
+        grid[row][col] = i
+        solution = solve(grid)
+        if solution:
 
+            return grid
+    grid[row][col] = '.'
 
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    solution = True
+    for i in range(9):
+        pos = (i, 0)
+        if len(set(get_row(solution, pos))) != 9:
+            solution = False
+        pos = (0, i)
+        if len(set(get_col(solution, pos))) != 9:
+            solution = False
+        pos = ((i % 3)*3, (i % 3)*3)
+        if len(set(get_block(solution, pos))) != 9:
+            solution = False
+    return solution
 
 
 def generate_sudoku(N: int) -> List[List[str]]:
