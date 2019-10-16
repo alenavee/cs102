@@ -23,9 +23,9 @@ def display(grid: List[List[str]]) -> None:
 def group(values: List[str], n: int) -> List[List[str]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
-    >>> group(['1','2','3','4'], 2)
+    >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
-    >>> group(['1','2','3','4','5','6','7','8','9'], 3)
+    >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
     groups = [values[n*i:n*i+n] for i in range(n)]
@@ -184,12 +184,13 @@ def generate_sudoku(N: int) -> List[List[str]]:
     True
     """
     grid = solve([['.'] * 9 for _ in range(9)])
-    while 81 - min(81, N) > 0:
-        N += 1
+    N = 81 - min(81, N)
+    while N:
         row = random.randint(0, 8)
-        col = random.randint(0, 8)
-        if grid[row][col] != '.':
-            grid[row][col] = '.'
+        column = random.randint(0, 8)
+        if grid[row][column] != '.':
+            grid[row][column] = '.'
+            N -= 1
     return grid
 
 
