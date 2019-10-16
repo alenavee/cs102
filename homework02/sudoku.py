@@ -185,9 +185,9 @@ def generate_sudoku(N: int) -> List[List[str]]:
     N = 81 - min(81, N)
     while N:
         row = random.randint(0, 8)
-        column = random.randint(0, 8)
-        if grid[row][column] != '.':
-            grid[row][column] = '.'
+        col = random.randint(0, 8)
+        if grid[row][col] != '.':
+            grid[row][col] = '.'
             N -= 1
     return grid
 
