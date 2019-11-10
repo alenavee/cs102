@@ -81,15 +81,17 @@ class GameOfLife:
         Выполнить один шаг игры.
         """
 
-        self.get_next_generation()
-        self.n_generation += 1
+        self.prev_generation = copy.deepcopy(self.curr_generation)
+        self.curr_generation = self.get_next_generation()
 
     @property
-    def is_max_generations_exceeded(self) -> bool:
+    def is_max_generations_exceed(self) -> bool:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        return self.n_generation >= self.max_generations
+        if self.n_generation < self.max_generations:
+            return False
+        return True
 
     @property
     def is_changing(self) -> bool:
