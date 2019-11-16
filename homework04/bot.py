@@ -97,7 +97,8 @@ def get_schedule(message):
             bot.send_message(message.chat.id, resp, parse_mode='HTML')
 
     except ValueError:
-        bot.send_message(message.chat.id, 'Введите команду и номер группы', parse_mode='HTML')
+        bot.send_message(message.chat.id, 'Неверная команда, попробуйте еще раз. Доступные команды: /день_недели, /all,'
+                                          ' /near, /tomorrow + номер_группы', parse_mode='HTML')
 
 
 @bot.message_handler(commands=['near'])
@@ -163,13 +164,14 @@ def get_near_lesson(message):
                         n_week = "1"
 
     except AttributeError:
-        resp = 'Неправильно введена команда. Попробуйте еще раз'
+        resp = 'Неверная команда, попробуйте еще раз. Доступные команды: /день_недели, /all, ' \
+               '/near, /tomorrow + номер_группы'
 
     bot.send_message(message.chat.id, resp, parse_mode='HTML')
 
 
 @bot.message_handler(commands=['tomorrow'])
-def get_tommorow(message):
+def get_tomorrow(message):
     """ Получить расписание на следующий день """
     n_day = datetime.datetime.weekday(datetime.datetime.today()) + 1
     n_week = datetime.date.today().isocalendar()[1]
@@ -198,7 +200,8 @@ def get_tommorow(message):
             bot.send_message(message.chat.id, resp, parse_mode='HTML')
 
     except ValueError:
-        bot.send_message(message.chat.id, 'Введите команду и номер группы', parse_mode='HTML')
+        bot.send_message(message.chat.id, 'Неверная команда, попробуйте еще раз. Доступные команды: /день_недели, /all,'
+                                          ' /near, /tomorrow + номер_группы', parse_mode='HTML')
 
 
 @bot.message_handler(commands=['all'])
@@ -220,15 +223,14 @@ def get_all_schedule(message):
 
                 for time, location, lesson in zip(times_lst, locations_lst, lessons_lst):
                     resp_i += '<b>{}</b>, {}, {}\n'.format(time, location, lesson)
-                # bot.send_message(message.chat.id, resp, parse_mode='HTML')
             except AttributeError:
                 resp_i += 'Занятий нет\n'
-                # bot.send_message(message.chat.id, 'Занятий нет', parse_mode='HTML')
             resp += resp_i
         bot.send_message(message.chat.id, resp, parse_mode='HTML')
 
     except ValueError:
-        bot.send_message(message.chat.id, 'Введите команду и номер группы', parse_mode='HTML')
+        bot.send_message(message.chat.id, 'Неверная команда, попробуйте еще раз. Доступные команды: /день_недели, /all,'
+                                          ' /near, /tomorrow + номер_группы', parse_mode='HTML')
 
 
 if __name__ == '__main__':
