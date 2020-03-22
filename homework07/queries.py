@@ -134,6 +134,7 @@ cursor.execute(
 
 fetch_all(cursor)
 
+
 # 10. What is the absolute difference between the number of unique sports at the 1996 Olympics and 2016 Olympics?
 
 cursor.execute(

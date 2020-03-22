@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS athlete_events (
 cursor.execute(query)
 conn.commit()
 
+
 with open('athlete_events.csv', 'r') as f:
     reader = csv.reader(f)
     # Skip the header row
